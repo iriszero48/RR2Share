@@ -8,17 +8,15 @@ private void GrantLunarCoin(CharacterBody body, uint count)
 	}
 	foreach (PlayerCharacterMasterController playerCharacterMasterController in PlayerCharacterMasterController.instances)
 	{
-		CharacterBody body2 = playerCharacterMasterController.master.GetBody();
-		CharacterMaster master = body2.master;
-		NetworkUser networkUser = Util.LookUpBodyNetworkUser(body2);
+		NetworkUser networkUser = Util.LookUpBodyNetworkUser(playerCharacterMasterController.master.GetBody());
 		if (networkUser)
 		{
-			if (master)
-			{
-				GenericPickupController.SendPickupMessage(master, this.pickupIndex);
-			}
 			networkUser.AwardLunarCoins(count);
 		}
 	}
-	UnityEngine.Object.Destroy(base.gameObject);
+	if (Util.LookUpBodyNetworkUser(body) && body.master)
+	{
+		GenericPickupController.SendPickupMessage(body.master, this.pickupIndex);
+		UnityEngine.Object.Destroy(base.gameObject);
+	}
 }
