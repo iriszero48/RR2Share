@@ -1,1 +1,1 @@
-# RR2Share
+# Risk of Rain 2 Share Item, LunarCoin
